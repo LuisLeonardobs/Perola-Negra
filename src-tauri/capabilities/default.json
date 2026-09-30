@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "O app so usa comandos proprios (invoke) e a janela principal. Nada de filesystem/shell/http pelo lado do Tauri.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "sharescreen-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Atalhos de linha de comando. Opcional — da pra usar `cargo tauri ...` direto.",
+  "scripts": {
+    "dev": "tauri dev",
+    "dev:mock": "tauri dev -- --features mock-audio",
+    "build": "tauri build",
+    "icon": "tauri icon app-icon.png"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

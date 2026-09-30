@@ -1,0 +1,49 @@
+[package]
+# nome interno da crate (invisivel pro usuario; o nome do app vem de tauri.conf.json)
+name = "sharescreen"
+version = "0.3.1"
+description = "Pérola Negra — compartilhamento de tela P2P com captura de audio por processo"
+authors = ["voce"]
+edition = "2021"
+rust-version = "1.77"
+
+# O binario e a lib tem o mesmo nome; o Tauri usa a lib no desktop.
+[lib]
+name = "sharescreen_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "sync", "macros", "time"] }
+tokio-tungstenite = "0.24"
+futures-util = "0.3"
+parking_lot = "0.12"
+log = "0.4"
+
+# --- especifico de Windows ---
+[target.'cfg(windows)'.dependencies]
+# captura de audio por processo (embrulha COM/PROPVARIANT/completion handler)
+wasapi = "0.15"
+# usado so pra listar os processos abertos (processes.rs)
+windows = { version = "0.58", features = [
+  "Win32_Foundation",
+  "Win32_System_Diagnostics_ToolHelp",
+] }
+
+[features]
+# Sem WASAPI: gera um tom de teste no lugar do audio do processo.
+# Serve pra fechar a ponte (backend -> webview -> WebRTC) antes de encarar a API do Windows.
+#   cargo tauri dev  --features mock-audio
+mock-audio = []
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"   # otimiza por TAMANHO — o app tem que ser leve
+strip = true

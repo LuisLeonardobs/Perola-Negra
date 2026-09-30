@@ -1,0 +1,13 @@
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# icones gerados por `cargo tauri icon` (mantido so o app-icon.png fonte)
+src-tauri/icons/*.icns
+src-tauri/icons/Square*.png
+src-tauri/icons/StoreLogo.png
+
+# SO
+.DS_Store
+Thumbs.db
+node_modules/
